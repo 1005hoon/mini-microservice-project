@@ -9,7 +9,7 @@ app.use(express.json())
 const commentsByPostId = {};
 
 app.get('/posts/:id/comments', (req, res) => {
-  res.send(commentsByPostId[id] || []);
+  res.send(commentsByPostId[req.params.id] || []);
 });
 
 app.post('/posts/:id/comments', (req, res) => {

@@ -4,6 +4,7 @@ const { randomBytes } = require('crypto');
 const app = express();
 
 app.use(express.json())
+
 // 연습 목적으로 데이터를 앱 메모리에 보관합니다
 const posts = {};
 
