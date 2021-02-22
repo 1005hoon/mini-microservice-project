@@ -1,9 +1,11 @@
 const express = require('express');
 const { randomBytes } = require('crypto');
+const cors = require('cors');
 
 const app = express();
 
-app.use(express.json())
+app.use(express.json());
+app.use(cors());
 
 // 연습 목적으로 데이터를 앱 메모리에 보관합니다
 const commentsByPostId = {};
