@@ -1,14 +1,28 @@
-import React from 'react'
+import React, { useState } from 'react';
+import axios from 'axios';
 
 export default function PostCreate() {
+  const [ title, setTitle ] = useState('');
+
+  const onSubmit = async(e)  => {
+    e.preventDefault();
+    
+    await axios.post('http://localhost:4000/posts', { title })
+
+    setTitle('')
+  };
+
   return (
     <div>
-      <form>
+      <form onSubmit={onSubmit}>
         <div className="form-group">
           <label>제목</label>
-          <input type="text" className="form-control"/>
+          <input 
+            type="text" 
+            className="form-control" 
+            onChange={e => setTitle(e.target.value)}/>
         </div>  
-        <button className="btn btn-primary">등록</button>
+        <button className="btn btn-primary">등록하기</button>
       </form>      
     </div>
   )
