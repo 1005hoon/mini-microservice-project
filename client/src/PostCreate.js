@@ -6,10 +6,11 @@ export default function PostCreate() {
 
   const onSubmit = async(e)  => {
     e.preventDefault();
-    
+
     await axios.post('http://localhost:4000/posts', { title })
 
     setTitle('')
+    
   };
 
   return (
@@ -17,9 +18,10 @@ export default function PostCreate() {
       <form onSubmit={onSubmit}>
         <div className="form-group">
           <label>제목</label>
-          <input 
+          <input  
             type="text" 
             className="form-control" 
+            value={title}
             onChange={e => setTitle(e.target.value)}/>
         </div>  
         <button className="btn btn-primary">등록하기</button>
