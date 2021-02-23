@@ -47,10 +47,30 @@ app.post('/posts/:id/comments', async (req, res) => {
 
 
 // 이벤트 버스로부터 받는 모든 이벤트 처리
-app.post('/events', (req, res) => {
+app.post('/events', async (req, res) => {
   console.log(`event received: ${req.body.type}`);
 
-  
+  const { type, data } = req.body;
+
+  // 만약 댓글 상태가 업데이트 된다면 아래의 로직을 처리해라
+  if (type === 'CommentModerated') {
+    const { postId, id, status } = data;
+    const comments = commentsByPostId[postId];
+
+    const comment = comments.find(comment => comment.id === id);
+    comment.status = status;
+
+    await axios.post('http://locahost:4005', {
+      type: 'CommmentUpdated',
+      data: {
+        id, 
+        status,
+        postId,
+        comment
+      }
+    })
+  }
+
   res.send({});
 })
 
