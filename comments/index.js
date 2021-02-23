@@ -40,6 +40,15 @@ app.post('/posts/:id/comments', async (req, res) => {
   res.status(201).send(comments);
 });
 
+
+// 이벤트 버스로부터 받는 모든 이벤트 처리
+app.post('/events', (req, res) => {
+  console.log(`event received: ${req.body.type}`);
+
+  
+  res.send({});
+})
+
 app.listen(4001, () => {
   console.log(`Listening on port 4001`);
 });
