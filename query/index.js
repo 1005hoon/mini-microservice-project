@@ -45,12 +45,11 @@ app.get('/posts', (req, res) => {
 });
 
 app.listen(4002, async () => {
-  console.log('synchronizing data with eventbus');
+  console.log('query running on 4002');
 
   const res = await axios.get('http://localhost:4005/events')
-
   for (let event of res.data){
-    console.log(Procoessing event)
+    console.log('processing events', event.type);
+    handleEvent(event.type, event.data);
   }
-
 });
