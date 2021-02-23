@@ -24,7 +24,11 @@ app.post('/posts/:id/comments', async (req, res) => {
   const comments = commentsByPostId[req.params.id] || [];
 
   // 메모리에 포스트 저장
-  comments.push({ id: commentId, content });
+  comments.push({ 
+    id: commentId, 
+    status: 'pending',
+    content
+  });
   commentsByPostId[req.params.id] = comments;
 
   // 이벤트 브로커에 이벤트 전송
