@@ -8,7 +8,9 @@ export default function PostList() {
   const [ posts, setPosts ] = useState({});
 
   const getPosts = async() => {
-    const { data } = await axios.get('http://localhost:4000/posts');
+    // query 서비스에 데이터를 받아오도록 요청
+    const { data } = await axios.get('http://localhost:4002/posts');
+    
     setPosts({ ... posts, ...data });
   }
 
@@ -16,7 +18,7 @@ export default function PostList() {
     getPosts();
   }, [])
 
-  const renderedPosts = Object.values(posts).map(({ id, title }) => (
+  const renderedPosts = Object.values(posts).map(({ id, title, comments }) => (
     <div 
       className="card"
       style={{ width: '30%', marginBottom: '20px' }}  
@@ -24,7 +26,7 @@ export default function PostList() {
     >
       <div className="card-body">
         <h3>{title}</h3>
-        <CommentList postId={id} />
+        <CommentList comments={comments}/>
         <CommentCreate postId={id} />
       </div>
     </div>
