@@ -1,4 +1,5 @@
 const express = require('express');
+const axios = require('axios');
 const { randomBytes } = require('crypto');
 const cors = require('cors');
 
@@ -14,7 +15,7 @@ app.get('/posts/:id/comments', (req, res) => {
   res.send(commentsByPostId[req.params.id] || []);
 });
 
-app.post('/posts/:id/comments', (req, res) => {
+app.post('/posts/:id/comments', async (req, res) => {
   // 고유 id 생성
   const commentId = randomBytes(8).toString('hex');
   const { content } = req.body;
@@ -25,6 +26,16 @@ app.post('/posts/:id/comments', (req, res) => {
   // 메모리에 포스트 저장
   comments.push({ id: commentId, content });
   commentsByPostId[req.params.id] = comments;
+
+  // 이벤트 브로커에 이벤트 전송
+  await await axios.post('http://localhost:4005/events', {
+    type: 'CommentCreated',
+    data: { 
+      id: commentId,
+      postId: req.params.id,
+      content
+     }
+  });
 
   res.status(201).send(comments);
 });
