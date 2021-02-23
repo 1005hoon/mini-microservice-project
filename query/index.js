@@ -24,17 +24,15 @@ app.post('/events', (req, res) => {
   post.comments.push({ id, content, status });
  }
 
- if (type === 'CommentUpdated') {
+ if (type === 'CommmentUpdated') {
    const { id, content, postId, status } = data;
    const post = posts[postId];
-   const comment = post.comment.find(comment => comment.id === id);
-
+   const comment = post.comments.find(comment => comment.id === id);
    comment.status = status;
-   comment.content = content;
+   comment.content = content;   
  }
 
  //  디버깅 목적의 콘솔
- console.log(posts)
  res.send({})
 })
 

@@ -54,7 +54,7 @@ app.post('/events', async (req, res) => {
 
   // 만약 댓글 상태가 업데이트 된다면 아래의 로직을 처리해라
   if (type === 'CommentModerated') {
-    const { postId, id, status } = data;
+    const { postId, id, status, content } = data;
     const comments = commentsByPostId[postId];
 
     const comment = comments.find(comment => comment.id === id);
@@ -66,7 +66,7 @@ app.post('/events', async (req, res) => {
         id, 
         status,
         postId,
-        comment
+        content
       }
     })
   }

@@ -9,6 +9,7 @@ app.use(express.json());
 app.post('/events', async (req, res) => {
   const { type, data } = req.body;
 
+  console.log(type, data)
   // comment가 생성된 케이스라면
   if (type === 'CommentCreated') {
     // orange라는 단어가 포함되어있는지 확인하고
