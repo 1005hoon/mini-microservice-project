@@ -15,6 +15,7 @@ app.get('/posts', (req, res) => {
   res.send(posts);
 });
 
+
 app.post('/posts', async (req, res) => {
   // 고유 id 생성
   const id = randomBytes(8).toString('hex');
@@ -24,7 +25,7 @@ app.post('/posts', async (req, res) => {
   posts[id] = { id, title }
 
   // 이벤트 브로커에 이벤트 전송
-  await axios.post('http://localhost:4005/events', {
+  await axios.post('http://event-bus-srv:4005/events', {
     type: 'PostCreated',
     data: { id, title }
   })
@@ -34,9 +35,7 @@ app.post('/posts', async (req, res) => {
 
 // 이벤트 버스로부터 받는 모든 이벤트 처리
 app.post('/events', (req, res) => {
-  console.log(`event received: ${req.body.type}`);
-
-  
+  console.log(`event received: ${req.body.type}`);  
   res.send({});
 })
 
