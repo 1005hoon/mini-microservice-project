@@ -16,7 +16,7 @@ app.post('/events', async (req, res) => {
     const status =  data.content.includes('orange') ? 'rejected' : 'approved';
   
     // 상태를 다시 이벤트 버스로 발송!
-    await axios.post('http://localhost:4005/events', {
+    await axios.post('http://event-bus-srv:4005/events', {
       type: 'CommentModerated',
       data: {
         id: data.id,

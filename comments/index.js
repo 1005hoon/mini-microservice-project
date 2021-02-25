@@ -32,7 +32,7 @@ app.post('/posts/:id/comments', async (req, res) => {
   commentsByPostId[req.params.id] = comments;
 
   // 이벤트 브로커에 이벤트 전송
-  await await axios.post('http://localhost:4005/events', {
+  await await axios.post('http://event-bus-srv:4005/events', {
     type: 'CommentCreated',
     data: { 
       id: commentId,
@@ -60,7 +60,7 @@ app.post('/events', async (req, res) => {
     const comment = comments.find(comment => comment.id === id);
     comment.status = status;
 
-    await axios.post('http://localhost:4005/events', {
+    await axios.post('http://event-bus-srv:4005/events', {
       type: 'CommmentUpdated',
       data: {
         id, 
